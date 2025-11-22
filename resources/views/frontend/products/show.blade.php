@@ -1,20 +1,28 @@
-@extends('layouts.app')
+@extends('components.layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto flex gap-6">
-    <div class="w-1/2">
-        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-    </div>
-    <div class="w-1/2">
-        <h1 class="text-2xl font-bold">{{ $product->name }}</h1>
-        <p class="text-xl mt-2">${{ $product->price }}</p>
-        <p class="mt-4">{{ $product->description }}</p>
+<div class="max-w-5xl mx-auto py-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <img src="{{ asset('storage/' . $product->image) }}"
+             alt="{{ $product->name }}"
+             class="w-full h-96 object-cover rounded-xl">
 
-        <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-4">
-            @csrf
-            <input type="number" name="quantity" value="1" min="1" class="border p-1 w-20">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2">Add to Cart</button>
-        </form>
+        <div>
+            <h1 class="text-3xl font-bold">{{ $product->name }}</h1>
+
+            <p class="text-2xl text-green-600 mt-2">${{ $product->price }}</p>
+
+            <p class="mt-4 text-gray-600">{{ $product->description }}</p>
+
+            <p class="mt-4">Stock: {{ $product->stock }}</p>
+
+            <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-6">
+                @csrf
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                    Add to Cart
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
